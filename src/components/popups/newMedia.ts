@@ -56,6 +56,8 @@ import {Accessor, createRoot, createSignal, Setter} from 'solid-js';
 import SelectedEffect from '../chat/selectedEffect';
 import PopupMakePaid from './makePaid';
 import paymentsWrapCurrencyAmount from '../../helpers/paymentsWrapCurrencyAmount';
+import ButtonIcon from '../buttonIcon';
+import {renderMediaEditor} from '../mediaEditor/editor';
 
 type SendFileParams = SendFileDetails & {
   file?: File,
@@ -194,6 +196,15 @@ export default class PopupNewMedia extends PopupElement {
         icon: 'document',
         text: 'SendAsFile',
         onClick: () => this.changeType('document'),
+        verify: () => this.files.length === 1 && this.willAttach.type !== 'document' && canSendDocs
+      }, {
+        icon: 'dragmedia',
+        text: 'Edit',
+        onClick: () => {
+          renderMediaEditor(this.willAttach.sendFileDetails[0].objectURL, (img: string) => {
+            this.willAttach.sendFileDetails[0].objectURL = img;
+          });
+        },
         verify: () => this.files.length === 1 && this.willAttach.type !== 'document' && canSendDocs
       }, {
         icon: 'document',
@@ -1121,7 +1132,58 @@ export default class PopupNewMedia extends PopupElement {
         if(shouldCompress && sendFileDetails.length > 1) {
           const albumContainer = document.createElement('div');
           albumContainer.classList.add('popup-item-album', 'popup-item');
-          albumContainer.append(...sendFileDetails.map((s) => s.itemDiv));
+          albumContainer.append(...sendFileDetails.map((s, idx) => {
+            const hoverButtonsWrapper = document.createElement('div');
+            hoverButtonsWrapper.classList.add('popup-item-hover-buttons');
+
+            const btnEnhance = ButtonIcon('dragmedia');
+            attachClickEvent(btnEnhance, () => {
+              renderMediaEditor(s.objectURL, (img: string) => {
+                this.willAttach.sendFileDetails[idx].objectURL = img;
+                (albumContainer.querySelector(`.popup-item:nth-child(${idx + 1}) img`) as HTMLImageElement).src = img;
+                s.objectURL = img;
+              });
+            }, {listenerSetter: this.listenerSetter});
+
+            const btnMediaSpoiler = ButtonIcon('mediaspoiler');
+            attachClickEvent(btnMediaSpoiler, () => {
+              this.applyMediaSpoiler(s);
+              btnMediaSpoiler.style.display = !!s.mediaSpoiler ? 'flex' : 'none';
+              btnMediaSpoilerOff.style.display = !!s.mediaSpoiler ? 'none' : 'flex';
+            }, {listenerSetter: this.listenerSetter});
+
+            const btnMediaSpoilerOff = ButtonIcon('mediaspoileroff');
+            btnMediaSpoilerOff.style.display = 'none';
+            attachClickEvent(btnMediaSpoilerOff, () => {
+              this.removeMediaSpoiler(s);
+              btnMediaSpoilerOff.style.display = !!s.mediaSpoiler ? 'flex' : 'none';
+              btnMediaSpoiler.style.display = !!s.mediaSpoiler ? 'none' : 'flex';
+            }, {listenerSetter: this.listenerSetter});
+
+            const btnDelete = ButtonIcon('delete');
+            attachClickEvent(btnDelete, () => {
+              const cb = (_item: File | SendFileDetails, itemidx: number) => idx !== itemidx;
+
+              albumContainer.removeChild(albumContainer.querySelector(`.popup-item:nth-child(${idx + 1})`));
+
+              prepareAlbum({
+                container: albumContainer,
+                items: sendFileDetails.filter(cb).map((p) => ({w: p.width, h: p.height})),
+                maxWidth: MAX_WIDTH,
+                minWidth: 100,
+                spacing: 4
+              });
+
+              this.files = this.files.filter(cb);
+              this.willAttach.sendFileDetails = this.willAttach.sendFileDetails.filter(cb);
+            }, {listenerSetter: this.listenerSetter});
+
+            const hoverButtons = [btnEnhance, btnMediaSpoiler, btnMediaSpoilerOff, btnDelete];
+            hoverButtons.forEach(btn => hoverButtonsWrapper.appendChild(btn))
+
+            s.itemDiv.appendChild(hoverButtonsWrapper);
+            return s.itemDiv
+          }));
 
           prepareAlbum({
             container: albumContainer,

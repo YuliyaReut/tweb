@@ -79,7 +79,7 @@ const checkDownload = dest => new Promise((resolve, reject) => {
     const stats = fs.statSync(dest);
     if(stats.size > 0 && stats.size === downloadSize) {
       clearInterval(timer);
-      resolve();
+      resolve(true);
     } else {
       downloadSize = stats.size;
     }
@@ -306,7 +306,8 @@ async function pipeline(options = {}) {
     await page.close();
     await browser.close();
     // unzip stage
-    extract(zipPath, {dir: outputDir}, async(err) => {
+    extract(zipPath, {dir: outputDir})
+    .catch(async (err) => {
       if(err) {
         throw err;
       }
@@ -315,6 +316,9 @@ async function pipeline(options = {}) {
       if(whenFinished) {
         whenFinished({outputDir});
       }
+    })
+    .finally(() => {
+      whenFinished({outputDir})
     });
   } catch(error) {
     console.error(error);

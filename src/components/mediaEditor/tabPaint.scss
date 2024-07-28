@@ -1,0 +1,69 @@
+.media-editor-tab-paint {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .media-editor-tab-paint-title {
+    margin: 0 20px;
+  }
+
+  .media-editor-brush-size {
+    margin: 0 12px;
+  }
+
+  .media-editor-brush-tools {
+    .media-editor-brush {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    ul {
+      list-style: none;          
+      padding: 0; 
+      margin: 0 15px;
+    }
+
+    li {
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      position: relative;
+      overflow: hidden;
+
+      span {
+        display: flex;
+        position: relative;
+        left: -2rem;
+      }
+
+      span:last-child {
+        padding-left: 1rem;
+      }
+    }
+
+    li:hover,
+    .media-editor-selected {
+      background-color: #2B2B2B;
+      border-radius: 10px;
+    }
+
+    .media-editor-selected span{
+      left: 0;
+    }
+
+    li::before {
+      content: '';
+      position: absolute;
+      width: 48px;
+      height: 16px;
+      left: -1rem;
+      z-index: 5;
+      background: linear-gradient(180deg, rgba(33, 33, 33, 0) 0%, #212121 100%);
+      transform: rotate(90deg);
+    }
+  }
+}

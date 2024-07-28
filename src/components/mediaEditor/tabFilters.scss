@@ -1,0 +1,11 @@
+.media-editor-tab-filters {
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  .media-editor-slider-container:last-child {
+    margin-bottom: 3rem;
+  }
+}

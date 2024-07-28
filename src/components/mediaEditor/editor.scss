@@ -1,0 +1,218 @@
+.media-editor {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .media-editor-tab-text,
+  .media-editor-tab-paint {
+    .media-editor-label {
+      font-weight: 600;
+      font-size: 16px;
+      color: #AAAAAA;
+    }
+  } 
+
+  .media-editor-elements-wrapper {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .media-editor-save-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: #4E8EE5;
+    color: white;
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+
+    &:hover {
+      background-color: #194D95;
+    }
+  }
+
+  .media-editor-image-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: black;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+  
+    canvas {
+      position: absolute;
+    }
+  
+    .media-editor-container-items {
+      position: relative;
+    }
+  
+    .media-editor-container {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .media-editor-text-field-container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      width: fit-content;
+    }
+  
+    .media-editor-text-field {
+      min-height: 50px;
+      width: fit-content;
+      height: fit-content;
+      resize: none;
+      outline: none;
+      pointer-events: auto;
+      opacity: 1;
+      font-size: var(--text-font-size);
+      color: var(--text-color);
+      text-align: var(--text-align);
+      display: flex;
+      flex-direction: column;
+      align-items: var(--text-align);
+      justify-content: center;
+    }
+    
+    .media-editor-text-field.media-editor-active {
+      border: 1px dashed rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0);
+    }
+  
+    .media-editor-text {
+      min-height: 50px;
+      width: fit-content;
+      height: fit-content;
+      position: absolute;
+      width: 100%;
+      display: flex;
+      pointer-events: auto;
+      cursor: text;
+      font-size: var(--text-font-size);
+      color: var(--text-color);
+      text-align: var(--text-align);
+    }
+    
+    .media-editor-frame-black {
+      text-shadow: 
+                  -1px -1px 0 #fff,  
+                  1px -1px 0 #fff,
+                  -1px 1px 0 #fff,
+                  1px 1px 0 #fff;
+    }
+    
+    .media-editor-frame-white {
+      background-color: white;
+      border-radius: 12px;
+      padding: 0 8px;
+      width: fit-content;
+    }
+  
+  
+    .rotate-handle {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      display: block;
+    }
+  
+    .rotate-handle.top-left { top: -5px; left: -5px; }
+    .rotate-handle.top-right { top: -5px; right: -5px; }
+    .rotate-handle.bottom-left { bottom: -5px; left: -5px; }
+    .rotate-handle.bottom-right { bottom: -5px; right: -5px; }
+  
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    
+    .media-editor-element-container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    
+    .media-editor-sticker {
+      display: flex;
+      width: 100px;
+      height: 100px;
+      pointer-events: auto;
+    
+      .media-editor-sticker-element {
+        height: 100px;
+        width: 100px;
+      }
+    }
+  
+    .media-editor-sticker canvas {
+      position: relative;
+    }
+    
+    .media-editor-sticker.media-editor-active {
+      border: 1px dashed rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0);
+    }
+  }
+
+  .media-editor-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .media-editor-controls {
+    background-color: #212121;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  
+    .media-editor-sticky-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 400px;
+      width: 30%;
+      height: fit-content;
+      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+      background-color: #212121;
+      z-index: 10;
+    }
+  }
+}

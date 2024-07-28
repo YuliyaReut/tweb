@@ -1,0 +1,24 @@
+.media-editor-navbar {
+  display: flex;
+  align-items: center;
+  color: white;
+  width: 100%;
+  padding: 20px 20px 0 20px;
+
+  .btn-icon {
+    color: #AAAAAA;
+    font-size: 24px;
+  }
+  
+  .btn-icon:last-child {
+    margin-left: 0.5rem;
+  }
+
+  .media-editor-navbar-title {
+    flex-grow: 1;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 1rem;
+  }
+}

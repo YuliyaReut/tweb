@@ -205,6 +205,39 @@
     }
   }
 
+  .popup-photo .popup-item-media .popup-item-hover-buttons {
+    display: none;
+    border-radius: 16px;
+    position: absolute;
+    background-color: #00000044;
+    bottom: .5rem;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+
+    .button-icon {
+      font-size: 20px;
+      color: #ffffff;
+      opacity: 0.7;
+    }
+
+    .btn-icon:hover {
+      background: none;
+
+        .button-icon {
+          background: none;
+          opacity: 1;
+        }
+      }
+  }
+
+  .popup-photo .popup-item-media:hover .popup-item-hover-buttons {
+    display: flex;
+  }
+
   .popup-photo > .popup-item {
     position: relative;
     border-radius: inherit;

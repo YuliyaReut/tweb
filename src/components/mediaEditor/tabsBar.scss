@@ -1,0 +1,61 @@
+.media-editor-tabs {
+  width: 100%;
+  position: relative;
+
+  .media-editor-tabs-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    height: 4px; 
+    background: linear-gradient(to top, #212121, #1f1f1f); 
+  }
+
+  .media-editor-tabs-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    color: white;
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 0 20px 0 20px;
+    transition: all 0.3s ease-out;
+    box-sizing: border-box;
+
+    .media-editor-underline {
+      position: absolute;
+      bottom: 0;
+      height: 3px;
+      width: 24px;
+      margin: 0 0.5rem;
+      background-color: #4E8EE5;
+      transition: transform 0.4s ease;
+      border-top: 2px solid #4E8EE5;
+      border-top-right-radius: 2px;
+      border-top-left-radius: 2px;
+      box-sizing: border-box;
+    }
+  
+    button {
+      display: flex;
+      margin: .5rem;
+      margin-bottom: 0;
+      padding-bottom: .75rem;
+      box-sizing: border-box;
+    }
+  
+    .tgico {
+      color: #AAAAAA;
+      font-size: 24px;
+      box-sizing: border-box;
+    }
+  
+    .media-editor-selected {
+      .tgico {
+        color: #4E8EE5;
+      }
+    }
+  }
+}
